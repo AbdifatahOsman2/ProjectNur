@@ -1,8 +1,11 @@
 // App.js
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useFonts, UnicaOne_400Regular } from '@expo-google-fonts/unica-one';
+import * as SplashScreen from 'expo-splash-screen';
+
 import SurahScreen from './screens/SurahScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import BackgroundChangeScreen from './screens/BackgroundChangeScreen';
@@ -10,7 +13,28 @@ import BackgroundChangeScreen from './screens/BackgroundChangeScreen';
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [bgImage, setBgImage] = React.useState(require('./assets/bg.png'));
+  const [bgImage, setBgImage] = useState(require('./assets/bg.png'));
+
+  // Load fonts
+  const [fontsLoaded] = useFonts({
+    UnicaOne_400Regular,
+  });
+
+  useEffect(() => {
+    // Prevent the splash screen from hiding automatically
+    SplashScreen.preventAutoHideAsync();
+  }, []);
+
+  useEffect(() => {
+    if (fontsLoaded) {
+      // Hide the splash screen once fonts are loaded
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null; // Return null while waiting for fonts to load
+  }
 
   return (
     <NavigationContainer>

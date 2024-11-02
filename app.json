@@ -16,7 +16,7 @@
         "UIBackgroundModes": [
           "audio"
         ],
-      "supportsTablet": true
+        "supportsTablet": true
       }
     },
     "android": {
@@ -27,6 +27,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

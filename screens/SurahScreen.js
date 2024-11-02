@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from "expo-av";
 import bgImage from "../assets/msjbg.png"; // Import the background image
-
+import { LinearGradient } from "expo-linear-gradient";
 // Importing separated components
 import Header from "../components/Header";
 import TimerModal from "../components/TimerModal";
@@ -310,7 +310,22 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
       }
     }
   };
-
+  const handlePreviousSurah = () => {
+    const currentSurah = parseInt(selectedSurah);
+    if (isNaN(currentSurah)) {
+      return;
+    }
+  
+    const previousSurah = currentSurah - 1;
+  
+    if (previousSurah >= 1) {
+      setSelectedSurah(previousSurah);
+    } else {
+      // No more surahs to go back to
+      stopAudio();
+    }
+  };
+  
   // Function to format time in mm:ss
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
@@ -346,6 +361,8 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     }
   };
 
+  
+
   // Function to handle Settings button press
   const handleSettingsPress = () => {
     navigation.navigate("Settings");
@@ -353,6 +370,12 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
 
   return (
     <ImageBackground source={bgImage} style={styles.background}>
+
+    <LinearGradient
+    colors={["rgba(6, 36, 72, 0.1)", "rgba(6, 36, 72, 0.9)"]}
+    style={styles.gradient}
+  />
+
     <View style={styles.overlay}>
       {/* Header with Reciter and Settings Icons */}
       <Header
@@ -396,14 +419,13 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
         {/* Audio Player */}
         {audioUrl && !isLoading && (
           <AudioPlayer
-            isPlaying={isPlaying}
-            onPlayPause={handlePlayPause}
-            onSetTimer={() => setTimerModalVisible(true)} // Trigger Timer Modal
-            position={position}
-            duration={duration}
-            onSeek={seekAudio}
-            formatTime={formatTime}
-          />
+          isPlaying={isPlaying}
+          onPlayPause={handlePlayPause}
+          onSetTimer={() => setTimerModalVisible(true)}
+          onSkipNext={handleNextSurah}  // Function to skip to the next surah
+          onSkipPrevious={handlePreviousSurah} // Define this function similarly to skip back
+        />
+        
         )}
 
         {/* Loading Indicator */}
@@ -417,12 +439,17 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    resizeMode: "cover",
     fontFamily: "sans-serif ",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent overlay
+    backgroundColor: "rgba(0, 0, 0, 0.2)", // Semi-transparent overlay
+  },
+  gradient: {
+    position: "absolute",
+    bottom: 0,
+    height: "25%", // Adjust this value to control the gradient height
+    width: "100%",
   },
   content: {
     flex: 1,
@@ -432,8 +459,10 @@ const styles = StyleSheet.create({
   },
 
   timerText: {
-    fontSize: 26,
+    fontSize: 56,
+    marginTop: 300,
     textAlign: "center",
+    fontFamily: "Inter_900Black",
     color: "#fff",
   },
 });

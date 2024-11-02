@@ -1,63 +1,49 @@
 // components/AudioPlayer.js
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Slider from "@react-native-community/slider";
+import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 const AudioPlayer = ({
   isPlaying,
   onPlayPause,
   onSetTimer,
-  position,
-  duration,
-  onSeek,
-  formatTime,
+  onSkipNext,
+  onSkipPrevious,
 }) => {
   return (
     <View style={styles.audioPlayerContainer}>
       <View style={styles.controlsRow}>
-        {/* Play/Pause Button */}
+        {/* Go Back Button */}
         <TouchableOpacity
-          onPress={onPlayPause}
-          accessible={true}
-          accessibilityLabel={isPlaying ? "Pause Audio" : "Play Audio"}
-          style={styles.playPauseButton}
+          onPress={onSkipPrevious}
+          style={[styles.controlButton, styles.skipButton]}
         >
+          <AntDesign name="caretleft" size={24} color="#fff" />
+        </TouchableOpacity>
+
+        {/* Play/Pause Button */}
+        <TouchableOpacity onPress={onPlayPause} style={styles.playPauseButton}>
           <Icon
             name={isPlaying ? "pause-circle" : "play-circle"}
-            size={64}
-            color={isPlaying ? "#ff0000" : "#00ff00"}
+            size={48}
+            color="#fff"
           />
         </TouchableOpacity>
 
-        {/* Timer Icon */}
+        {/* Skip Button */}
         <TouchableOpacity
-          style={styles.timerIcon}
-          onPress={onSetTimer}
-          accessible={true}
-          accessibilityLabel="Set Timer"
+          onPress={onSkipNext}
+          style={[styles.controlButton, styles.skipButton]}
         >
-          <MaterialCommunityIcons name="timer-outline" size={32} color="#fff" />
+          <AntDesign name="caretright" size={24} color="#fff" />
         </TouchableOpacity>
-      </View>
 
-      {/* Slider */}
-      <View style={styles.sliderContainer}>
-        <Slider
-          style={styles.slider}
-          minimumValue={0}
-          maximumValue={duration}
-          value={position}
-          onValueChange={onSeek}
-          disabled={!isPlaying}
-          minimumTrackTintColor="#1EB1FC"
-          maximumTrackTintColor="#d3d3d3"
-          thumbTintColor="#1EB1FC"
-        />
-        <Text style={styles.timeText}>
-          {formatTime(position)} / {formatTime(duration)}
-        </Text>
+        {/* Timer Icon */}
+        <TouchableOpacity onPress={onSetTimer} style={styles.timerIcon}>
+          <MaterialCommunityIcons name="timer-outline" size={32} style={{ MarginLeft: 40}} color="#fff" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -66,35 +52,40 @@ const AudioPlayer = ({
 const styles = StyleSheet.create({
   audioPlayerContainer: {
     alignItems: "center",
+    justifyContent: "center",
+    marginRight: 20,
     marginTop: 16,
+    marginBottom: 50,
   },
   controlsRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    marginBottom: 20,
   },
-
+  controlButton: {
+    backgroundColor: "#132741", // Dark blue background for the play/pause button
+    borderRadius: 50,
+    padding: 15,
+    marginHorizontal: 10,
+  },
   playPauseButton: {
-    marginRight: 0, // Increased spacing between play/pause and timer
+    backgroundColor: "#132741", // Grey background for skip buttons
+    borderRadius: 100,
+    width: 90,
+    height: 90,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 10,
+    marginHorizontal: 20,
+  },
+  skipButton: {
+    backgroundColor: "#575757", // Grey background for skip buttons
   },
   timerIcon: {
-    padding: 8, // Added padding for better touch target
-  },
-  sliderContainer: {
-    width: "100%",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  slider: {
-    width: "100%",
-    height: 40,
-  },
-  timeText: {
-    fontSize: 14,
-    color: "#fff",
-    marginTop: 8,
+    position: "absolute",
+    right: 20,
+    alignSelf: "center",
   },
 });
 

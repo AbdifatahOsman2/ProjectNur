@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
-    fontSize: 18,
+    fontSize: 48,
     textAlign: "center",
     color: "#fff",
     paddingRight: 30, // To ensure the text is never behind the icon
-    fontFamily: "Arial",
+    fontFamily: "UnicaOne_400Regular",
   },
 });
 
