@@ -34,7 +34,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     route.params?.surahNumber || 1
   );
   const [chapters, setChapters] = useState([]);
-  const [selectedReciterId, setSelectedReciterId] = useState(2); // Default to Mishari Rashid Alafasy
+  const [selectedReciterId, setSelectedReciterId] = useState(13); // Default to Mishari Rashid Alafasy
 
   // Timer States
   const [timerDuration, setTimerDuration] = useState(0);
@@ -73,6 +73,9 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     { label: "1 Hour", value: 60 * 60000 },
     { label: "3 Hours", value: 180 * 60000 },
     { label: "5 Hours", value: 300 * 60000 },
+    { label: "7 Hours", value: 420 * 60000 },
+    { label: "9 Hours", value: 540 * 60000 },
+    { label: "10 Hours", value: 600 * 60000 },
   ];
 
   // Update timerRunningRef whenever timerRunning changes
@@ -345,6 +348,12 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     }
   };
 
+  const resetTimer = () => {
+    setTimerDuration(0); // Reset the duration
+    setRemainingTime(0); // Reset remaining time
+    setTimerRunning(false); // Stop the timer if it's running
+  };
+
   // Function to handle Reciter selection
   const handleSelectReciter = (reciterId) => {
     setSelectedReciterId(reciterId);
@@ -395,6 +404,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
         visible={timerModalVisible}
         onClose={() => setTimerModalVisible(false)}
         onSetTimer={handleSetTimer}
+        onResetTimer={resetTimer}
         timerOptions={timerOptions}
       />
 
@@ -459,10 +469,10 @@ const styles = StyleSheet.create({
   },
 
   timerText: {
-    fontSize: 56,
-    marginTop: 300,
+    fontSize: 46,
+    marginTop: 100,
     textAlign: "center",
-    fontFamily: "Inter_900Black",
+    fontFamily: "UnicaOne_400Regular",
     color: "#fff",
   },
 });

@@ -42,7 +42,7 @@ const AudioPlayer = ({
 
         {/* Timer Icon */}
         <TouchableOpacity onPress={onSetTimer} style={styles.timerIcon}>
-          <MaterialCommunityIcons name="timer-outline" size={32} style={{ MarginLeft: 40}} color="#fff" />
+          <MaterialCommunityIcons name="timer-outline" size={32} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   timerIcon: {
     position: "absolute",
-    right: 20,
+    right: -15,
     alignSelf: "center",
   },
 });

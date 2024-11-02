@@ -2,7 +2,7 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 const Header = ({ onOpenReciterModal, onPressSettings }) => {
   return (
     <View style={styles.header}>
@@ -11,9 +11,10 @@ const Header = ({ onOpenReciterModal, onPressSettings }) => {
         onPress={onOpenReciterModal}
         accessible={true}
         accessibilityLabel="Open Reciter Selection"
+        style={{ marginLeft: 6 }}
       >
-        <MaterialCommunityIcons
-          name="account-settings"
+        <FontAwesome6
+          name="user-group"
           size={32}
           color="#fff"
         />
@@ -24,8 +25,9 @@ const Header = ({ onOpenReciterModal, onPressSettings }) => {
         onPress={onPressSettings}
         accessible={true}
         accessibilityLabel="Open Settings"
+        style={{ marginRight: 6 }}
       >
-        <MaterialCommunityIcons name="cog-outline" size={32} color="#fff" />
+        <FontAwesome6 name="gear" size={32} color="#fff" />
       </TouchableOpacity>
     </View>
   );

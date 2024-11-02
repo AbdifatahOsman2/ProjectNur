@@ -1,6 +1,6 @@
 // screens/SettingsScreen.js
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
 
 const SettingsScreen = ({ navigation }) => {
@@ -11,23 +11,23 @@ const SettingsScreen = ({ navigation }) => {
         <OptionItem
           icon="account-circle"
           title="Account"
-          onPress={() => navigation.navigate("AccountSettings")}
+          onPress={() =>  Alert.alert("In Construction")}
         />
         <OptionItem
-          icon="notifications"
-          title="Notifications"
-          onPress={() => navigation.navigate("NotificationSettings")}
-        />
-        <OptionItem
-          icon="lock"
-          title="Privacy"
-          onPress={() => navigation.navigate("PrivacySettings")}
+          icon="question-mark"
+          title="About"
+          onPress={() => navigation.navigate("About")}
         />
         <OptionItem
           icon="format-paint"
           title="Change Background"
           onPress={() => navigation.navigate("BackgroundChange")}
         />
+        <OptionItem
+        icon="notifications"
+        title="Notifications"
+        onPress={() => Alert.alert("Coming Soon")}
+      />
       </ScrollView>
     </View>
   );
@@ -43,6 +43,7 @@ const OptionItem = ({ icon, title, onPress }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    fontFamily: "UnicaOne_400Regular",
     backgroundColor: "black",
   },
   contentContainer: {
@@ -50,9 +51,10 @@ const styles = StyleSheet.create({
     marginTop: 60,
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     color: "#ffffff",
     marginBottom: 24,
+    fontFamily: "UnicaOne_400Regular",
   },
   optionItem: {
     flexDirection: "row",
@@ -62,9 +64,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   optionText: {
-    fontSize: 18,
+    fontSize: 24,
     color: "#ffffff",
     marginLeft: 10,
+    fontFamily: "UnicaOne_400Regular",
   },
 });
 

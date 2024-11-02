@@ -9,31 +9,29 @@ import * as SplashScreen from 'expo-splash-screen';
 import SurahScreen from './screens/SurahScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import BackgroundChangeScreen from './screens/BackgroundChangeScreen';
+import AboutScreen from './screens/AboutScreen'; // Import the new About screen
 
 const Stack = createStackNavigator();
 
 export default function App() {
   const [bgImage, setBgImage] = useState(require('./assets/bg.png'));
 
-  // Load fonts
   const [fontsLoaded] = useFonts({
     UnicaOne_400Regular,
   });
 
   useEffect(() => {
-    // Prevent the splash screen from hiding automatically
     SplashScreen.preventAutoHideAsync();
   }, []);
 
   useEffect(() => {
     if (fontsLoaded) {
-      // Hide the splash screen once fonts are loaded
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null; // Return null while waiting for fonts to load
+    return null;
   }
 
   return (
@@ -56,6 +54,11 @@ export default function App() {
         >
           {(props) => <BackgroundChangeScreen {...props} setBgImage={setBgImage} />}
         </Stack.Screen>
+        <Stack.Screen
+          options={{ headerShown: false, title: 'About' }}
+          name="About"
+          component={AboutScreen}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

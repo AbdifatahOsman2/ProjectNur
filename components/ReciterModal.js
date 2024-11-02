@@ -50,25 +50,29 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
     padding: 20,
     borderRadius: 10,
     elevation: 5, // For Android shadow
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 30,
     marginBottom: 20,
     textAlign: "center",
     fontWeight: "bold",
+    color: "#fff",
+    fontFamily: "UnicaOne_400Regular",
   },
   modalOption: {
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderBottomColor: "#fff",
   },
   modalOptionText: {
-    fontSize: 16,
+    fontSize: 22,
     textAlign: "center",
+    color: "#fff",
+    fontFamily: "UnicaOne_400Regular",
   },
 });
 
