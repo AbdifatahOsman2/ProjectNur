@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 16,
-    fontSize: 48,
+    fontSize: 40,
     textAlign: "center",
     color: "#fff",
     paddingRight: 30, // To ensure the text is never behind the icon

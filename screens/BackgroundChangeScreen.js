@@ -1,7 +1,7 @@
 // screens/BackgroundChangeScreen.js
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList } from "react-native";
-
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 // Array of background images
 const backgrounds = [
   { id: 1, src: require("../assets/msjbg.png") },
@@ -27,6 +27,9 @@ const BackgroundChangeScreen = ({ navigation, setBgImage }) => {
   
     return (
       <View style={styles.container}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+      <MaterialIcons name="arrow-back-ios" size={26} color="#ffffff" />
+    </TouchableOpacity>
         <Text style={styles.title}>Select Background</Text>
         <FlatList
           data={backgrounds}
@@ -62,6 +65,12 @@ const BackgroundChangeScreen = ({ navigation, setBgImage }) => {
       margin: 5,
       borderRadius: 8,
     },
+    backButton: {
+        position: "absolute",
+        top: 95,
+        left: 30,
+        zIndex: 1, // Ensures the back button is above other elements
+      },
   });
   
   export default BackgroundChangeScreen;

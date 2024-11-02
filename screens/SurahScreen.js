@@ -68,7 +68,6 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
 
   // Timer Options in milliseconds
   const timerOptions = [
-    { label: "1 Minute", value: 60 * 1000 },
     { label: "30 Minutes", value: 30 * 60000 },
     { label: "1 Hour", value: 60 * 60000 },
     { label: "3 Hours", value: 180 * 60000 },
@@ -299,20 +298,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     }
   };
 
-  // Function to seek audio
-  const seekAudio = async (value) => {
-    if (soundRef.current) {
-      try {
-        const status = await soundRef.current.getStatusAsync();
-        if (status.isLoaded) {
-          await soundRef.current.setPositionAsync(value);
-          setPosition(value);
-        }
-      } catch (error) {
-        console.log("Error seeking audio:", error);
-      }
-    }
-  };
+  
   const handlePreviousSurah = () => {
     const currentSurah = parseInt(selectedSurah);
     if (isNaN(currentSurah)) {
@@ -332,9 +318,10 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   // Function to format time in mm:ss
   const formatTime = (milliseconds) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `${hours}:${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
   // Function to set the timer based on selected duration
@@ -450,6 +437,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     fontFamily: "sans-serif ",
+    backgroundColor: "#18293D",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,

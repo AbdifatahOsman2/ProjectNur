@@ -5,7 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons"; // Import MaterialIcons for 
 
 const AboutScreen = ({ navigation }) => {
   return (
-    <ImageBackground source={require('../assets/AboutBackground.png')} style={styles.background}>
+    <View style={styles.background}>
       <View style={styles.container}>
         {/* Back Button */}
         <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
@@ -21,7 +21,7 @@ const AboutScreen = ({ navigation }) => {
           carefully selected verses, helping you find comfort, relaxation, and spiritual solace.
         </Text>
       </View>
-    </ImageBackground>
+    </View>
   );
 };
 
@@ -44,15 +44,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontFamily: "UnicaOne_400Bold",
     color: "#ffffff",
     textAlign: "center",
     marginBottom: 20,
   },
   paragraph: {
-    fontSize: 26,
-    fontFamily: "Inter_400Regular",
-    letterSpacing: 0.3,
+    fontSize: 28,
+    fontFamily: "UnicaOne_400Regular",
+    letterSpacing: 0.7,
     color: "#ffffff",
     textAlign: "center",
     lineHeight: 24,

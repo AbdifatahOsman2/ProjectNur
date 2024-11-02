@@ -1,20 +1,28 @@
 // screens/SettingsScreen.js
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from "react-native";
-import { MaterialIcons } from '@expo/vector-icons'; // Ensure you have @expo/vector-icons installed
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons"; // Ensure you have @expo/vector-icons installed
 
 const SettingsScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>Settings</Text>
+      {/* Back Button */}
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+        <MaterialIcons name="arrow-back-ios" size={26} color="#ffffff" />
+      </TouchableOpacity>
+
+      {/* Title */}
+      <Text style={styles.title}>Settings</Text>
+
+      {/* Options */}
+      <View style={styles.contentContainer}>
         <OptionItem
           icon="account-circle"
           title="Account"
-          onPress={() =>  Alert.alert("In Construction")}
+          onPress={() => navigation.navigate("Login")}
         />
         <OptionItem
-          icon="question-mark"
+          icon="priority-high"
           title="About"
           onPress={() => navigation.navigate("About")}
         />
@@ -24,11 +32,11 @@ const SettingsScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("BackgroundChange")}
         />
         <OptionItem
-        icon="notifications"
-        title="Notifications"
-        onPress={() => Alert.alert("Coming Soon")}
-      />
-      </ScrollView>
+          icon="question-mark"
+          title="How to use Rahat Al-Rooh"
+          onPress={() => navigation.navigate("Image")}
+        />
+      </View>
     </View>
   );
 };
@@ -39,22 +47,29 @@ const OptionItem = ({ icon, title, onPress }) => (
     <Text style={styles.optionText}>{title}</Text>
   </TouchableOpacity>
 );
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    fontFamily: "UnicaOne_400Regular",
     backgroundColor: "black",
+    fontFamily: "UnicaOne_400Regular",
   },
-  contentContainer: {
-    padding: 20,
-    marginTop: 60,
+  backButton: {
+    position: "absolute",
+    top: 103,
+    left: 30,
+    zIndex: 1, // Ensures the back button is above other elements
   },
   title: {
     fontSize: 30,
     color: "#ffffff",
+    marginTop: 100, // Adjusted to add space below the back button
     marginBottom: 24,
+    textAlign: "center",
     fontFamily: "UnicaOne_400Regular",
+  },
+  contentContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
   },
   optionItem: {
     flexDirection: "row",

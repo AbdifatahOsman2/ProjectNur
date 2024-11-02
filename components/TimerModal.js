@@ -42,7 +42,7 @@ const TimerModal = ({
             </TouchableOpacity>
 
             {/* Reset Timer Button */}
-            <TouchableOpacity style={styles.button} onPress={onResetTimer}>
+            <TouchableOpacity style={styles.Resetbutton} onPress={onResetTimer}>
               <Text style={styles.buttonText}>Reset Timer</Text>
             </TouchableOpacity>
           </View>
@@ -61,17 +61,18 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    backgroundColor: "#fff",
+    backgroundColor: "#000000",
     padding: 20,
     borderRadius: 10,
     elevation: 5,
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 26,
     marginBottom: 20,
     textAlign: "center",
     fontWeight: "bold",
     fontFamily: "UnicaOne_400Regular",
+    color: "#fff",
   },
   modalOption: {
     paddingVertical: 12,
@@ -79,8 +80,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ccc",
   },
   modalOptionText: {
-    fontSize: 16,
+    fontSize: 20,
     textAlign: "center",
+    color: "#fff",
+    fontFamily: "UnicaOne_400Regular",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -88,6 +91,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   button: {
+    flex: 1,
+    backgroundColor: "rgba(26, 115, 232, 0.5)",
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  Resetbutton: {
     flex: 1,
     backgroundColor: "#1a73e8",
     paddingVertical: 10,
