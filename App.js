@@ -14,6 +14,7 @@ import AboutScreen from './screens/AboutScreen';
 import HowtoScreen from './screens/HowtoScreen';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import UnderConstructionScreen from './screens/UnderConstructionScreen ';
 
 const Stack = createStackNavigator();
 const BACKGROUND_IMAGE_KEY = "backgroundImage"; // Key for storing background image
@@ -88,6 +89,11 @@ export default function App() {
         options={{ headerShown: false }}
         name="Register"
         component={RegisterScreen}
+      />
+      <Stack.Screen
+        options={{ headerShown: false }}
+        name="UnderConstruction"
+        component={UnderConstructionScreen}
       />
         <Stack.Screen
           options={{ headerShown: false, title: 'Change Background' }}

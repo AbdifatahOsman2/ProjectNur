@@ -19,7 +19,7 @@ const SettingsScreen = ({ navigation }) => {
         <OptionItem
           icon="account-circle"
           title="Account"
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("UnderConstruction")}
         />
         <OptionItem
           icon="priority-high"
