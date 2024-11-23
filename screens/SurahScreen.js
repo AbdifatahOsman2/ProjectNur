@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from "expo-av";
-import bgImage from "../assets/msjbg.png"; // Import the background image
+import bgImage from "../assets/msjbg.png"; 
 import { LinearGradient } from "expo-linear-gradient";
 // Importing separated components
 import Header from "../components/Header";
@@ -28,6 +28,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+
 
   // Surah and Reciter States
   const [selectedSurah, setSelectedSurah] = useState(
@@ -49,25 +50,35 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   // Reference to track the first render to prevent auto-play
   const isFirstRender = useRef(true);
 
+  // 1: abdul_baset/mujawwad
+  // 2:abdul_baset/murattal
+
   // Define the list of top reciters
   const reciters = [
-    { id: 2, name: "Mishari Rashid Alafasy" },
+    { id: 1, name: "Abdul Basit Abdus Samad (Mujawwad)" },
+    { id: 2, name: "Abdul Basit Abdus Samad (Murattal)" },
     { id: 3, name: "Abdul Rahman Al-Sudais" },
     { id: 4, name: "Saud Al-Shuraim" },
-    { id: 7, name: "mishari_al_afasy" },
-    { id: 6, name: "Mahmoud Khalil Al-Hussary" },
+    { id: 6, name: "Mahmoud Khalil Al-Husary" },
+    { id: 7, name: "Mishary Rashid Alafasy" },
+    { id: 9, name: "Muhammad Siddiq Al-Minshawi" },
     { id: 13, name: "Saad Al-Ghamdi" },
-    { id: 19, name: "Ahmed Al-Ajmi" },
+    { id: 17, name: "Sahl Yasin" },
     { id: 18, name: "Salah Bukhatir" },
-    { id: 9, name: "Maher Al-Muaiqly" },
-    { id: 20, name: "sodais_and_shuraim" },
-    { id: 22, name: "muhammad_ayyoob" },
-    { id: 40, name: "abdulwadood_haneef" },
-    { id: 32, name: "test" },
-  ];
+    { id: 19, name: "Ahmed Al-Ajmi" },
+    { id: 22, name: "Muhammad Ayyub" },
+    { id: 23, name: "Tawfeeq As-Sawaigh" },
+    { id: 32, name: "Muhammad Jibreel" },
+    { id: 40, name: "Abdul Wadood Haneef" }
+];
+
+
+
 
   // Timer Options in milliseconds
   const timerOptions = [
+    // 1 min
+    { label: "1 Minute", value: 60000 },
     { label: "30 Minutes", value: 30 * 60000 },
     { label: "1 Hour", value: 60 * 60000 },
     { label: "3 Hours", value: 180 * 60000 },
@@ -463,7 +474,7 @@ const styles = StyleSheet.create({
     fontSize: 46,
     marginTop: 100,
     textAlign: "center",
-    fontFamily: "UnicaOne_400Regular",
+    fontFamily: "bold",
     color: "#fff",
   },
 });

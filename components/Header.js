@@ -1,8 +1,11 @@
-// components/Header.js
+// components/Header.js 
 import React from "react";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { View, TouchableOpacity, StyleSheet, Image } from "react-native";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+
+// Import the new Imam icon
+import ImamIcon from "../assets/Imam1.png";
+
 const Header = ({ onOpenReciterModal, onPressSettings }) => {
   return (
     <View style={styles.header}>
@@ -11,13 +14,10 @@ const Header = ({ onOpenReciterModal, onPressSettings }) => {
         onPress={onOpenReciterModal}
         accessible={true}
         accessibilityLabel="Open Reciter Selection"
-        style={{ marginLeft: 6 }}
+        style={styles.iconWrapper}
+
       >
-        <FontAwesome6
-          name="user-group"
-          size={32}
-          color="#fff"
-        />
+        <Image source={ImamIcon} style={styles.icon} />
       </TouchableOpacity>
 
       {/* Settings Icon */}
@@ -25,7 +25,7 @@ const Header = ({ onOpenReciterModal, onPressSettings }) => {
         onPress={onPressSettings}
         accessible={true}
         accessibilityLabel="Open Settings"
-        style={{ marginRight: 6 }}
+        style={styles.iconWrapper}
       >
         <FontAwesome6 name="gear" size={32} color="#fff" />
       </TouchableOpacity>
@@ -39,6 +39,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 16,
     marginTop: 60,
+  },
+  iconWrapper: {
+    marginHorizontal: 6,
+    
+  },
+  icon: {
+    width: 45, // Adjust the width as needed
+    height: 42, // Adjust the height as needed
+    resizeMode: "contain",
+    marginTop: -2,
   },
 });
 
