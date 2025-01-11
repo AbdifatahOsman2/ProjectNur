@@ -16,11 +16,7 @@ const SettingsScreen = ({ navigation }) => {
 
       {/* Options */}
       <View style={styles.contentContainer}>
-        <OptionItem
-          icon="account-circle"
-          title="Account"
-          onPress={() => navigation.navigate("UnderConstruction")}
-        />
+
         <OptionItem
           icon="priority-high"
           title="About"

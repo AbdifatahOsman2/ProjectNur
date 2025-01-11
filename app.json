@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "NurApp",
-    "slug": "NurApp",
+    "name": "Rahatul Ruh",
+    "slug": "RahatulRuh",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,7 +17,8 @@
           "audio"
         ],
         "supportsTablet": true
-      }
+      },
+      "bundleIdentifier": "com.hygalac.RahatulRuh"
     },
     "android": {
       "adaptiveIcon": {
@@ -30,6 +31,11 @@
     },
     "plugins": [
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "2b8c89f3-a1ba-4e4d-9898-74e49a5076b0"
+      }
+    }
   }
 }

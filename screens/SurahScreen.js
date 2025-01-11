@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Modal,
   ImageBackground,
+  Touchable,
 } from "react-native";
 import axios from "axios";
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from "expo-av";
@@ -419,6 +420,7 @@ const formatTime = (milliseconds) => {
 
       {/* Main Content */}
       <View style={styles.content}>
+      
 
         {/* Selected Surah Picker */}
         <SurahPicker
