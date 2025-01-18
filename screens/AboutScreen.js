@@ -43,18 +43,20 @@ const styles = StyleSheet.create({
     left: 20,
   },
   title: {
-    fontSize: 30,
+    fontSize: 40,
     color: "#ffffff",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 10,
   },
   paragraph: {
     fontSize: 28,
-    fontFamily: "UnicaOne_400Regular",
+    paddingTop: 20,
+    fontFamily: "GloriaHallelujah_400Regular",
     letterSpacing: 0.7,
     color: "#ffffff",
     textAlign: "center",
-    lineHeight: 24,
+    lineHeight: 34,
+    marginTop: 20,
   },
 });
 

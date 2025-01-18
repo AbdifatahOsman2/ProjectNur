@@ -4,9 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useFonts, UnicaOne_400Regular } from '@expo-google-fonts/unica-one';
+import { GloriaHallelujah_400Regular } from '@expo-google-fonts/gloria-hallelujah';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import OnboardingScreen1 from './screens/OnboardingScreen1'; // Add your onboarding screens
+import OnboardingScreen2 from './screens/OnboardingScreen2';
+import OnboardingScreen3 from './screens/OnboardingScreen3';
 import SurahScreen from './screens/SurahScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import BackgroundChangeScreen from './screens/BackgroundChangeScreen';
@@ -21,19 +25,66 @@ const BACKGROUND_IMAGE_KEY = "backgroundImage"; // Key for storing background im
 
 export default function App() {
   const [bgImage, setBgImage] = useState(require('./assets/bg.png')); // Default background
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+
+  // Reset onboarding status for testing
+useEffect(() => {
+  const resetOnboarding = async () => {
+    try {
+      await AsyncStorage.removeItem('hasSeenOnboarding'); // Clears the flag
+      console.log('Onboarding reset for testing.');
+    } catch (error) {
+      console.log('Error resetting onboarding:', error);
+    }
+  };
+
+  resetOnboarding();
+}, []);
+
+
+
+  // Load fonts
   const [fontsLoaded] = useFonts({
     UnicaOne_400Regular,
+    GloriaHallelujah_400Regular
   });
 
-  // Load background image and fonts
+  // Check onboarding status
+  useEffect(() => {
+    checkOnboardingStatus();
+  }, []);
+
+  const checkOnboardingStatus = async () => {
+    try {
+      const value = await AsyncStorage.getItem('hasSeenOnboarding');
+      setHasSeenOnboarding(value === 'true');
+      setIsLoading(false);
+    } catch (error) {
+      console.log('Error checking onboarding status:', error);
+      setHasSeenOnboarding(false);
+      setIsLoading(false);
+    }
+  };
+
+  // Function to complete onboarding
+  const completeOnboarding = async () => {
+    try {
+      await AsyncStorage.setItem('hasSeenOnboarding', 'true');
+      setHasSeenOnboarding(true);
+    } catch (error) {
+      console.log('Error setting onboarding status:', error);
+    }
+  };
+
+  // Load background image and prevent splash screen auto-hide
   useEffect(() => {
     const loadResources = async () => {
       try {
-        // Load the saved background image from AsyncStorage
         const savedBgImage = await AsyncStorage.getItem(BACKGROUND_IMAGE_KEY);
         if (savedBgImage) {
-          setBgImage({ uri: savedBgImage }); // Set saved image if available
+          setBgImage({ uri: savedBgImage });
         }
       } catch (error) {
         console.log("Error loading background image:", error);
@@ -44,31 +95,49 @@ export default function App() {
     loadResources();
   }, []);
 
-  // Hide the splash screen once fonts and background image are loaded
+  // Hide splash screen once everything is loaded
   useEffect(() => {
-    if (fontsLoaded) {
+    if (fontsLoaded && !isLoading) {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded]);
+  }, [fontsLoaded, isLoading]);
 
-  // Save the selected background image to AsyncStorage
   const handleSetBgImage = async (newBgImage) => {
     setBgImage(newBgImage);
     try {
-      // Save the image URI (local path) as a string in AsyncStorage
       await AsyncStorage.setItem(BACKGROUND_IMAGE_KEY, newBgImage.uri || "");
     } catch (error) {
       console.log("Error saving background image:", error);
     }
   };
 
-  if (!fontsLoaded) {
-    return null; // Return null while waiting for fonts to load
+  if (!fontsLoaded || isLoading) {
+    return null;
   }
+
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+    <Stack.Navigator initialRouteName={hasSeenOnboarding ? 'Surah' : 'Onboarding1'}>
+      {/* Onboarding Screens */}
+      <Stack.Screen 
+      name="Onboarding1" 
+      options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'fade', presentation: 'transparentModal' }}
+    >
+      {(props) => <OnboardingScreen1 {...props} completeOnboarding={completeOnboarding} />}
+    </Stack.Screen>
+    <Stack.Screen 
+      name="Onboarding2" 
+      options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'fade', presentation: 'transparentModal' }}
+    >
+      {(props) => <OnboardingScreen2 {...props} completeOnboarding={completeOnboarding} />}
+    </Stack.Screen>
+    <Stack.Screen 
+      name="Onboarding3" 
+      options={{ headerShown: false, animationTypeForReplace: 'push', animation: 'fade', presentation: 'transparentModal' }}
+    >
+      {(props) => <OnboardingScreen3 {...props} completeOnboarding={completeOnboarding} />}
+    </Stack.Screen>
         <Stack.Screen
           options={{ headerShown: false }}
           name="Surah"

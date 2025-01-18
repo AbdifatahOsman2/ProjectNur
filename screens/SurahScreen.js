@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import axios from "axios";
 import { Audio, InterruptionModeIOS, InterruptionModeAndroid } from "expo-av";
-import bgImage from "../assets/msjbg.png"; 
 import { LinearGradient } from "expo-linear-gradient";
 // Importing separated components
 import Header from "../components/Header";
@@ -19,8 +18,26 @@ import TimerModal from "../components/TimerModal";
 import ReciterModal from "../components/ReciterModal";
 import SurahPicker from "../components/SurahPicker";
 import AudioPlayer from "../components/AudioPlayer";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const SurahScreen = ({ route, navigation, bgImage }) => {
+const backgroundImages = {
+  msjbg: require("../assets/msjbg.png"),
+  pbg: require("../assets/pbg.png"),
+  MoonBG: require("../assets/MoonBG.png"),
+  background: require("../assets/background.png"),
+  background1: require("../assets/background (1).png"),
+  background2: require("../assets/background (2).png"),
+  background4: require("../assets/background (4).png"),
+  background5: require("../assets/background (5).png"),
+  background6: require("../assets/background (6).png"),
+  background7: require("../assets/background (7).png"),
+  background8: require("../assets/background (8).png"),
+  background9: require("../assets/background (9).png"),
+  background10: require("../assets/background (10).png"),
+  background11: require("../assets/background (11).png"),
+};
+
+const SurahScreen = ({ route, navigation }) => {
   // Audio and Playback States
   const [audioUrl, setAudioUrl] = useState(null);
   const [sound, setSound] = useState(null);
@@ -29,6 +46,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [backgroundImage, setBackgroundImage] = useState(null);
 
 
   // Surah and Reciter States
@@ -51,8 +69,6 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   // Reference to track the first render to prevent auto-play
   const isFirstRender = useRef(true);
 
-  // 1: abdul_baset/mujawwad
-  // 2:abdul_baset/murattal
 
   // Define the list of top reciters
   const reciters = [
@@ -93,6 +109,38 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
   useEffect(() => {
     timerRunningRef.current = timerRunning;
   }, [timerRunning]);
+
+
+  // Load preferences from AsyncStorage on component mount
+
+  useEffect(() => {
+    const loadPreferences = async () => {
+      try {
+        const savedSurah = await AsyncStorage.getItem("selectedSurah");
+        const savedReciter = await AsyncStorage.getItem("selectedReciterId");
+        const savedBackground = await AsyncStorage.getItem("selectedBackground");
+
+        if (savedSurah) handleSurahChange(JSON.parse(savedSurah));
+        if (savedReciter) handleSelectReciter(JSON.parse(savedReciter));
+        
+        // Load background image from storage or route params
+        const newBgPath = route.params?.selectedBackground || savedBackground;
+        if (newBgPath) {
+          setBackgroundImage(newBgPath);
+          // Save new background from route params if it exists
+          if (route.params?.selectedBackground) {
+            await AsyncStorage.setItem("selectedBackground", route.params.selectedBackground);
+          }
+        }
+      } catch (error) {
+        console.log("Error loading preferences:", error);
+      }
+    };
+
+    loadPreferences();
+  }, [route.params?.selectedBackground]);
+
+  
 
   // Fetch chapters on component mount
   useEffect(() => {
@@ -211,6 +259,11 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     }
   };
 
+    const handleSurahChange = async (newSurah) => {
+    setSelectedSurah(newSurah);
+    await AsyncStorage.setItem("selectedSurah", JSON.stringify(newSurah));
+  };
+
   // Function to play audio
   const playAudio = async () => {
     if (audioUrl) {
@@ -269,7 +322,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     const nextSurah = currentSurah + 1;
 
     if (nextSurah <= chapters.length) {
-      setSelectedSurah(nextSurah);
+      handleSurahChange(nextSurah);
     } else {
       // No more surahs to play
       stopAudio();
@@ -320,7 +373,7 @@ const SurahScreen = ({ route, navigation, bgImage }) => {
     const previousSurah = currentSurah - 1;
   
     if (previousSurah >= 1) {
-      setSelectedSurah(previousSurah);
+      handleSurahChange(previousSurah);
     } else {
       // No more surahs to go back to
       stopAudio();
@@ -357,11 +410,13 @@ const formatTime = (milliseconds) => {
   };
 
   // Function to handle Reciter selection
-  const handleSelectReciter = (reciterId) => {
+  const handleSelectReciter = async (reciterId) => {
     setSelectedReciterId(reciterId);
+    await AsyncStorage.setItem("selectedReciterId", JSON.stringify(reciterId));
     setReciterModalVisible(false);
     fetchSurahAudio(selectedSurah, reciterId);
   };
+  
 
   // Function to handle Play/Pause
   const handlePlayPause = () => {
@@ -380,7 +435,7 @@ const formatTime = (milliseconds) => {
   };
 
   return (
-    <ImageBackground source={bgImage} style={styles.background}>
+    <ImageBackground source={backgroundImage ? backgroundImages[backgroundImage] : backgroundImages.msjbg} style={styles.background}>
 
     <LinearGradient
     colors={["rgba(6, 36, 72, 0.1)", "rgba(6, 36, 72, 0.9)"]}
@@ -426,7 +481,7 @@ const formatTime = (milliseconds) => {
         <SurahPicker
           chapters={chapters}
           selectedSurah={selectedSurah}
-          onSelectSurah={setSelectedSurah}
+          onSelectSurah={handleSurahChange}
         />
 
         {/* Audio Player */}
